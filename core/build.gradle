@@ -5,9 +5,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
 }
 
