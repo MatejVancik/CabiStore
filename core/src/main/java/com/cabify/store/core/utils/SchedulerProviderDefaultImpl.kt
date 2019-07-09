@@ -2,8 +2,11 @@ package com.cabify.store.core.utils
 
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SchedulerProviderDefaultImpl: SchedulerProvider {
+@Singleton
+class SchedulerProviderDefaultImpl @Inject constructor(): SchedulerProvider {
 
     override fun io(): Scheduler = Schedulers.io()
 
