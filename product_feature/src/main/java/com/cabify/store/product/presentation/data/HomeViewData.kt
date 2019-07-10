@@ -1,16 +1,22 @@
 package com.cabify.store.product.presentation.data
 
-class HomeViewData {
+import com.cabify.store.core.android.presentation.adapter.Identifiable
 
-}
-
-data class HomeTitleItem(
-    val title: String
+data class HomeViewData(
+    val recyclerData: List<HomeItemViewData>
 )
 
+sealed class HomeItemViewData: Identifiable
+
+data class HomeTitleItemViewData(
+    override val identifier: Long,
+    val title: String
+): HomeItemViewData()
+
 data class HomeProductItemViewData(
+    override val identifier: Long,
     val productId: String,
     val title: String,
     val price: String,
-    val imageLink: String
-)
+    val image: Int
+): HomeItemViewData()

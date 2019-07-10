@@ -9,5 +9,5 @@ data class ProductListDto(
 data class ProductDto(
     @JsonProperty("code") val code: String,
     @JsonProperty("name") val name: String,
-    @JsonProperty("price") val price: Int
+    @JsonProperty("price") val price: Float
 )

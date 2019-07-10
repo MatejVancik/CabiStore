@@ -3,5 +3,5 @@ package com.cabify.store.product.domain.data
 data class ProductData(
     val code: String,
     val name: String,
-    val price: Int
+    val price: Float
 )
