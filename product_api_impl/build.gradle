@@ -6,10 +6,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
     implementation "com.google.dagger:dagger:$daggerVersion"

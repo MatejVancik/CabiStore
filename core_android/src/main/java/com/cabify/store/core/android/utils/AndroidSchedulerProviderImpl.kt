@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AndroidSchedulerProviderImpl @Inject constructor(
+class AndroidSchedulerProviderImpl(
     schedulerProvider: SchedulerProvider
 ): AndroidSchedulerProvider, SchedulerProvider by schedulerProvider {
 

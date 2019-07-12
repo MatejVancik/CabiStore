@@ -1,5 +1,6 @@
 package com.cabify.store.product.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider.Factory
@@ -12,13 +13,15 @@ import com.cabify.store.product.R
 import com.cabify.store.product.presentation.data.HomeItemViewData
 import com.cabify.store.product.presentation.data.HomeViewData
 import com.cabify.store.product.presentation.viewmodel.HomeViewModel
+import com.cabify.store.product.presentation.viewmodel.HomeViewModelFactory
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
 
     @Inject
-    lateinit var vmFactory: Factory
+    lateinit var vmFactory: HomeViewModelFactory
 
     lateinit var viewModel: HomeViewModel
 
@@ -26,6 +29,11 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
         get() = R.layout.fragment_home
 
     private lateinit var adapter: BasicAdapter<HomeItemViewData>
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,6 +45,7 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
 
         homeRecycler.adapter = adapter
         viewModel.viewData.observe(this, this)
+        viewModel.start()
     }
 
     override fun onLoading(isLoading: Boolean) {

@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SchedulerProviderDefaultImpl @Inject constructor(): SchedulerProvider {
+class SchedulerProviderDefaultImpl: SchedulerProvider {
 
     override fun io(): Scheduler = Schedulers.io()
 

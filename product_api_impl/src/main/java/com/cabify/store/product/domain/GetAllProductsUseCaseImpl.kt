@@ -6,7 +6,7 @@ import com.cabify.store.product.repo.ProductRepository
 import com.cabify.store.product.repo.data.mapper.ProductMapper
 import io.reactivex.Single
 
-class GetAllProductsuseCaseImpl(
+class GetAllProductsUseCaseImpl(
     private val productRepository: ProductRepository,
     private val productMapper: ProductMapper,
     private val schedulerProvider: SchedulerProvider

@@ -2,19 +2,30 @@ package com.cabify.cabistore
 
 import android.app.Application
 import com.cabify.cabistore.di.AppComponent
-import com.cabify.cabistore.di.AppModule
+import com.cabify.cabistore.di.AppComponentProvider
 import com.cabify.cabistore.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
-class CabiStoreApp: Application() {
+class CabiStoreApp : Application(), AppComponentProvider, HasAndroidInjector {
 
-    lateinit var appComponent: AppComponent
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
+    override val appComponent: AppComponent by lazy {
+        DaggerAppComponent.factory()
+            .create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
+        appComponent.inject(this)
+    }
 
-        appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .build()
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector
     }
 
 }

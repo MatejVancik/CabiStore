@@ -1,23 +1,23 @@
 package com.cabify.store.product.presentation.di
 
-import com.cabify.store.product.presentation.view.HomeFragment
+import com.cabify.store.core.di.FeatureScope
 import dagger.Subcomponent
-import javax.inject.Provider
+import dagger.android.DispatchingAndroidInjector
 
-@Subcomponent(modules = [ProductModule::class])
+@FeatureScope
+@Subcomponent(
+    modules = [
+        ProductModule::class,
+        ProductFragmentBuilder::class
+    ]
+)
 interface ProductComponent {
 
-    fun inject(fragment: HomeFragment)
-
-    @Subcomponent.Builder
-    interface Builder {
-        fun build(): ProductComponent
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): ProductComponent
     }
 
-}
-
-interface ProductComponentProvider {
-
-    fun productComponentBuilderProvider(): Provider<ProductComponent.Builder>
+    fun androidInjector(): DispatchingAndroidInjector<Any>
 
 }
