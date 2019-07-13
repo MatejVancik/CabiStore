@@ -9,6 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cart_api" />
+            <option value="$PROJECT_DIR$/cart_api_impl" />
+            <option value="$PROJECT_DIR$/cart_feature" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core_android" />
             <option value="$PROJECT_DIR$/product_api" />

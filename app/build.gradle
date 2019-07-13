@@ -42,4 +42,7 @@ dependencies {
 
     implementation project(":product_feature")
     implementation project(":product_api_impl")
+    implementation project(":cart_feature")
+    implementation project(":cart_api_impl")
+    implementation project(":core_android")
 }

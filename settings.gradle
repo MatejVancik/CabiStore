@@ -1,1 +1,1 @@
-include ':app', ':product_api', ':product_api_impl', ':core', ':core_android', ':product_feature'
+include ':app', ':product_api', ':product_api_impl', ':core', ':core_android', ':product_feature', ':cart_api', ':cart_api_impl', ':cart_feature'

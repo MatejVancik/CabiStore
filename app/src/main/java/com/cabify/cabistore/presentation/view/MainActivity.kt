@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cabify.cabistore.R
+import com.cabify.store.cart.presentation.di.CartComponent
+import com.cabify.store.cart.presentation.di.CartComponentProvider
 import com.cabify.store.product.presentation.di.ProductComponent
 import com.cabify.store.product.presentation.di.ProductComponentProvider
 import dagger.android.AndroidInjection
@@ -13,13 +15,20 @@ import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), ProductComponentProvider, HasAndroidInjector {
+class MainActivity : AppCompatActivity(), ProductComponentProvider, CartComponentProvider, HasAndroidInjector {
 
     @Inject
     lateinit var productComponentFactory: ProductComponent.Factory
 
+    @Inject
+    lateinit var cartComponentFactory: CartComponent.Factory
+
     override val productComponent: ProductComponent by lazy {
         productComponentFactory.create()
+    }
+
+    override val cartComponent: CartComponent by lazy {
+        cartComponentFactory.create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +41,10 @@ class MainActivity : AppCompatActivity(), ProductComponentProvider, HasAndroidIn
     }
 
     override fun androidInjector(): AndroidInjector<Any> {
-        return productComponent.androidInjector()
+        return AndroidInjector {
+            cartComponent.androidInjector().maybeInject(it) ||
+                productComponent.androidInjector().maybeInject(it)
+        }
     }
 
 }

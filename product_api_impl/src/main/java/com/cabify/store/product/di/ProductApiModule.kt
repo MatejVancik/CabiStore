@@ -16,33 +16,37 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 class ProductApiModule {
 
     @Provides
+    @Singleton
     fun provideGetAllProductsUseCase(
-        productRepository: ProductRepository,
-        productMapper: ProductMapper,
-        schedulerProvider: SchedulerProvider
+        productRepository: ProductRepository
     ): GetAllProductsUseCase {
-        return GetAllProductsUseCaseImpl(productRepository, productMapper, schedulerProvider)
+        return GetAllProductsUseCaseImpl(productRepository)
     }
 
     @Provides
+    @Singleton
     fun provideProductMapper(): ProductMapper {
         return ProductMapperImpl()
     }
 
     @Provides
+    @Singleton
     fun provideProductRepository(
         productRemoteApi: ProductRemoteApi,
-        schedulerProvider: SchedulerProvider
+        schedulerProvider: SchedulerProvider,
+        productMapper: ProductMapper
     ): ProductRepository {
-        return ProductRepositoryImpl(productRemoteApi, schedulerProvider)
+        return ProductRepositoryImpl(productRemoteApi, schedulerProvider, productMapper)
     }
 
     @Provides
+    @Singleton
     fun provideProductRemoteApi(
         @Named("productApi") retrofit: Retrofit
     ): ProductRemoteApi {
@@ -56,6 +60,7 @@ class ProductApiModule {
      */
     @Named("productApi")
     @Provides
+    @Singleton
     fun provideProductApiRetrofit(
         @Named("productApi") httpClient: OkHttpClient
     ): Retrofit {
@@ -69,6 +74,7 @@ class ProductApiModule {
 
     @Named("productApi")
     @Provides
+    @Singleton
     fun providesHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
             val loggingInterceptor = HttpLoggingInterceptor()

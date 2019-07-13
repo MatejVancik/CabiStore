@@ -2,6 +2,8 @@ package com.cabify.cabistore.di
 
 import android.content.Context
 import com.cabify.cabistore.CabiStoreApp
+import com.cabify.store.cart.di.CartApiModule
+import com.cabify.store.cart.presentation.di.CartComponent
 import com.cabify.store.core.android.di.CoreAndroidModule
 import com.cabify.store.core.di.CoreModule
 import com.cabify.store.product.di.ProductApiModule
@@ -18,9 +20,10 @@ import javax.inject.Singleton
         ActivityBuilder::class,
         CoreModule::class,
         CoreAndroidModule::class,
-        // Should be scoped to user session which would be above session features.
+        // Following modules should be scoped to user session which would be above session's features.
         // For simplicity it's scoped to application lifecycle.
-        ProductApiModule::class
+        ProductApiModule::class,
+        CartApiModule::class
     ]
 )
 interface AppComponent {
@@ -33,5 +36,7 @@ interface AppComponent {
     fun inject(cabiStoreApp: CabiStoreApp)
 
     val productComponentFactory: ProductComponent.Factory
+
+    val cartComponentFactory: CartComponent.Factory
 
 }

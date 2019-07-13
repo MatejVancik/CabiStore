@@ -3,7 +3,6 @@ package com.cabify.store.product.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider.Factory
 import com.cabify.store.core.android.presentation.adapter.BasicAdapter
 import com.cabify.store.core.android.presentation.base.BaseFragment
 import com.cabify.store.core.android.presentation.extensions.observe
@@ -62,7 +61,7 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
     }
 
     private fun onProductClicked(productId: String) {
-
+        viewModel.addToCart(productId)
     }
 
 }
