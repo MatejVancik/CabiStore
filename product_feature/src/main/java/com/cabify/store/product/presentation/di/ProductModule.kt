@@ -21,10 +21,9 @@ class ProductModule {
     fun provideHomeViewModelFactory(
         getAllProductsUseCase: GetAllProductsUseCase,
         schedulerProvider: AndroidSchedulerProvider,
-        homeViewDataMapper: HomeViewDataMapper,
-        addItemToCartUseCase: AddItemToCartUseCase
+        homeViewDataMapper: HomeViewDataMapper
     ): HomeViewModelFactory {
-        return HomeViewModelFactory(getAllProductsUseCase, schedulerProvider, homeViewDataMapper, addItemToCartUseCase)
+        return HomeViewModelFactory(getAllProductsUseCase, schedulerProvider, homeViewDataMapper)
     }
 
     @Provides

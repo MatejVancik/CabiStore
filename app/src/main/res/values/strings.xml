@@ -2,4 +2,5 @@
     <string name="app_name">CabiStore</string>
     <string name="home">Home</string>
     <string name="cart">Cart</string>
+    <string name="shopping_cart">Shopping cart</string>
 </resources>

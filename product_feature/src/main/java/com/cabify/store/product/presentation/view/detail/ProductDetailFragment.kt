@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import com.bumptech.glide.Glide
-import com.cabify.store.core.android.presentation.extensions.observe
-import com.cabify.store.core.android.presentation.extensions.obtainViewModel
+import com.cabify.store.core.android.presentation.extensions.*
 import com.cabify.store.core.android.presentation.viewdata.ViewDataObserver
 import com.cabify.store.product.R
 import com.cabify.store.product.presentation.data.ProductDetailViewData
@@ -65,19 +64,23 @@ class ProductDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Prod
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productId = arguments!!.getString(KEY_PRODUCT_ID)
+        val productId = arguments!!.getString(KEY_PRODUCT_ID)!!
 
         viewModel = obtainViewModel(vmFactory)
 
         countPicker.countChangeListener = { addToCartButton.isEnabled = it > 0 }
-        addToCartButton.setOnClickListener { viewModel.addToBasket(countPicker.count) }
+        addToCartButton.setOnClickListener {
+            viewModel.addToBasket(countPicker.count)
+            toast(R.string.message_product_added)
+        }
 
         viewModel.viewData.observe(this, this)
         viewModel.start(productId)
     }
 
     override fun onLoading(isLoading: Boolean) {
-
+        loader.visibleOrGone(isLoading)
+        contentViews.visibleOrInvisible(!isLoading)
     }
 
     override fun onNewData(viewData: ProductDetailViewData) {
@@ -93,7 +96,8 @@ class ProductDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Prod
     }
 
     override fun onDataError(error: Throwable) {
-
+        // TODO: Proper error handling to be added as a future improvement.
+        dismiss()
     }
 
 }

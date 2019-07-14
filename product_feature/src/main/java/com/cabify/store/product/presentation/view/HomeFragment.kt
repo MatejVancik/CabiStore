@@ -7,6 +7,8 @@ import com.cabify.store.core.android.presentation.adapter.BasicAdapter
 import com.cabify.store.core.android.presentation.base.BaseFragment
 import com.cabify.store.core.android.presentation.extensions.observe
 import com.cabify.store.core.android.presentation.extensions.obtainViewModel
+import com.cabify.store.core.android.presentation.extensions.visibleOrGone
+import com.cabify.store.core.android.presentation.extensions.visibleOrInvisible
 import com.cabify.store.core.android.presentation.viewdata.ViewDataObserver
 import com.cabify.store.product.R
 import com.cabify.store.product.presentation.data.HomeItemViewData
@@ -46,10 +48,14 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
         homeRecycler.adapter = adapter
         viewModel.viewData.observe(this, this)
         viewModel.start()
+
+        errorView.setOnClickListener { viewModel.start() }
     }
 
     override fun onLoading(isLoading: Boolean) {
-
+        loader.visibleOrGone(isLoading)
+        homeRecycler.visibleOrInvisible(!isLoading)
+        errorView.visibleOrGone(false)
     }
 
     override fun onNewData(viewData: HomeViewData) {
@@ -58,7 +64,8 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
     }
 
     override fun onDataError(error: Throwable) {
-
+        errorView.visibleOrGone(true)
+        homeRecycler.visibleOrInvisible(false)
     }
 
     private fun onProductClicked(productId: String) {

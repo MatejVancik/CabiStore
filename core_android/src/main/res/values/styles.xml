@@ -14,4 +14,10 @@
         <item name="fontPath">fonts/light.ttf</item>
     </style>
 
+    <style name="Loader">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:indeterminate">true</item>
+    </style>
+
 </resources>

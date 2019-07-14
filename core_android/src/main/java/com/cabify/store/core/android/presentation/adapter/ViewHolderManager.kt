@@ -11,6 +11,6 @@ abstract class ViewHolderManager<Model, VH : RecyclerView.ViewHolder>  {
 
     abstract fun isSuitable(data: Any, position: Int): Boolean
 
-    open fun onViewRecycled(holder: VH) {}
+    open fun onViewRecycled(holder: VH) = Unit
 
 }

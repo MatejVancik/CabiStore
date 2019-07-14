@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:startDestination="@id/nav_home"
-            android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
 
-    <fragment android:id="@+id/nav_home"
-              android:name="com.cabify.store.product.presentation.view.HomeFragment"/>
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.cabify.store.product.presentation.view.HomeFragment"
+        android:label="@string/home" />
 
-    <fragment android:id="@+id/nav_cart"
-              android:name="com.cabify.store.cart.presentation.view.CartFragment"/>
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.cabify.store.cart.presentation.view.CartFragment"
+        android:label="@string/shopping_cart" />
 
 </navigation>

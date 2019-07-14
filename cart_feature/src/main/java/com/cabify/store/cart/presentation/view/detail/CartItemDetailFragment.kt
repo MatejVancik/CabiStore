@@ -12,9 +12,7 @@ import com.cabify.store.cart.presentation.data.*
 import com.cabify.store.cart.presentation.viewmodel.detail.CartItemDetailViewModel
 import com.cabify.store.cart.presentation.viewmodel.detail.CartItemDetailViewModelFactory
 import com.cabify.store.core.android.presentation.event.Event
-import com.cabify.store.core.android.presentation.extensions.observe
-import com.cabify.store.core.android.presentation.extensions.obtainViewModel
-import com.cabify.store.core.android.presentation.extensions.toast
+import com.cabify.store.core.android.presentation.extensions.*
 import com.cabify.store.core.android.presentation.viewdata.ViewDataObserver
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.support.AndroidSupportInjection
@@ -49,9 +47,8 @@ class CartItemDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Car
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productId = arguments!!.getString(KEY_PRODUCT_ID)
+        val productId = arguments!!.getString(KEY_PRODUCT_ID)!!
         viewModel = obtainViewModel(vmFactory)
-
 
         viewModel.viewData.observe(this, this)
         viewModel.events.observe(this, onEventObserver())
@@ -61,7 +58,8 @@ class CartItemDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Car
     }
 
     override fun onLoading(isLoading: Boolean) {
-
+        loader.visibleOrGone(isLoading)
+        contentViews.visibleOrInvisible(!isLoading)
     }
 
     override fun onNewData(viewData: CartItemDetailViewData) {
@@ -78,12 +76,16 @@ class CartItemDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Car
     }
 
     override fun onDataError(error: Throwable) {
-
+        toast(R.string.error_loading_cart_item)
+        dismiss()
     }
 
     private fun onEventObserver() = Observer<Event<CartItemDetailEvent>> {
         when (it.getContentIfNotHandled()) {
-            DismissDetail -> dismiss()
+            DismissDetail -> {
+                toast(R.string.message_cart_item_deleted)
+                dismiss()
+            }
             DeleteFailed -> { toast(R.string.error_delete_cart_item) }
             UpdateFailed -> { toast(R.string.error_update_cart_item) }
         }

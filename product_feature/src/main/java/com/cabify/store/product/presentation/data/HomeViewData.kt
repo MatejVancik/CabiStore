@@ -18,5 +18,6 @@ data class HomeProductItemViewData(
     val productId: String,
     val title: String,
     val price: String,
-    val image: Int
+    val image: Int,
+    val hasDiscount: Boolean = false
 ): HomeItemViewData()

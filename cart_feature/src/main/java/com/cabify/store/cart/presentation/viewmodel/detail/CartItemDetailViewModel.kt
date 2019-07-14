@@ -9,6 +9,7 @@ import com.cabify.store.cart.presentation.data.*
 import com.cabify.store.cart.presentation.data.mapper.CartItemDetailViewDataMapper
 import com.cabify.store.core.android.presentation.viewdata.ViewData
 import com.cabify.store.core.android.presentation.base.BaseViewModel
+import com.cabify.store.core.android.presentation.base.ViewDataHolder
 import com.cabify.store.core.android.presentation.event.Event
 import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 
@@ -18,13 +19,11 @@ class CartItemDetailViewModel(
     private val deleteCartItemUseCase: DeleteCartItemUseCase,
     private val schedulerProvider: AndroidSchedulerProvider,
     private val cartItemDetailViewDataMapper: CartItemDetailViewDataMapper
-) : BaseViewModel() {
+) : BaseViewModel(), ViewDataHolder<CartItemDetailViewData> {
 
-    private val internalData = MutableLiveData<ViewData<CartItemDetailViewData>>().apply {
+    override val viewData = MutableLiveData<ViewData<CartItemDetailViewData>>().apply {
         value = ViewData.Loading()
     }
-    val viewData: LiveData<ViewData<CartItemDetailViewData>>
-        get() = internalData
 
     private val internalEvent = MutableLiveData<Event<CartItemDetailEvent>>()
     val events: LiveData<Event<CartItemDetailEvent>>
@@ -38,10 +37,7 @@ class CartItemDetailViewModel(
             .observeOn(schedulerProvider.computation())
             .map(cartItemDetailViewDataMapper::cartItemToDetailViewData)
             .observeOn(schedulerProvider.ui())
-            .subscribe(
-                { internalData.value = ViewData.Data(it) },
-                { internalData.value = ViewData.Error(it) }
-            )
+            .subscribeToViewData()
             .bind()
     }
 
@@ -50,12 +46,12 @@ class CartItemDetailViewModel(
             .observeOn(schedulerProvider.ui())
             .subscribe(
                 {
-                    // Redraw UI with proper values
+                    // Redraw UI with proper values.
                     start(productId)
                 },
                 {
-                    // Reset UI to latest state
-                    internalData.value = internalData.value
+                    // Reset UI to latest state.
+                    viewData.value = viewData.value
                     internalEvent.value = Event(UpdateFailed)
                 }
             )

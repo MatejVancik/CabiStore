@@ -1,12 +1,26 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/cabiGreen</item>
         <item name="colorPrimaryDark">@color/cabiGreenDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/cabiGray</item>
         <item name="android:textViewStyle">@style/TextAppearance.Regular</item>
+    </style>
+
+    <style name="ToolbarTextAppearance">
+        <item name="android:textColor">@color/cabiGray</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">0</item>
+        <item name="fontPath">fonts/bold.ttf</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:padding">@dimen/default_spacing_small</item>
+    </style>
+
+    <style name="MyToolbar">
+        <item name="android:elevation">0dp</item>
     </style>
 
 </resources>

@@ -9,6 +9,7 @@ import com.cabify.store.cart.presentation.data.mapper.CartItemDetailViewDataMapp
 import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 import java.lang.IllegalArgumentException
 
+@Suppress("UNCHECKED_CAST")
 class CartItemDetailViewModelFactory(
     private val getCartItemUseCase: GetCartItemUseCase,
     private val updateCartItemUseCase: UpdateCartItemUseCase,

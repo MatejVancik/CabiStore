@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     android:padding="@dimen/default_spacing">
 
+    <ProgressBar
+        android:id="@+id/loader"
+        style="@style/Loader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/contentViews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="nameTextView,imageView,countPicker,deleteButton,divider
+        ,pricePerItemTitleTextView,pricePerItemValueTextView,discountTitleTextView
+        ,discountValueTextView,totalPriceTitleTextView,totalPriceValueTextView" />
+
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"

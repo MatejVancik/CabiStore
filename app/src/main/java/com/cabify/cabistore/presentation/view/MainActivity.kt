@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.cabify.cabistore.R
 import com.cabify.store.cart.presentation.di.CartComponent
@@ -41,15 +43,20 @@ class MainActivity : AppCompatActivity(), ProductComponentProvider, CartComponen
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
         val navController = findNavController(R.id.fragmentContainer)
+        val appBarConfiguration = AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_cart).build()
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration)
         navigation.setupWithNavController(navController)
+
+        title = navController.graph.findNode(navigation.selectedItemId)?.label
     }
 
     override fun androidInjector(): AndroidInjector<Any> {
         return AndroidInjector {
-            cartComponent.androidInjector().maybeInject(it) ||
-                productComponent.androidInjector().maybeInject(it)
+            productComponent.androidInjector().maybeInject(it) ||
+                cartComponent.androidInjector().maybeInject(it)
         }
     }
 

@@ -5,6 +5,7 @@ import com.bumptech.glide.Glide
 import com.cabify.store.core.android.presentation.adapter.BasicViewHolder
 import com.cabify.store.core.android.presentation.adapter.ViewHolderManager
 import com.cabify.store.core.android.presentation.extensions.inflateView
+import com.cabify.store.core.android.presentation.extensions.visibleOrGone
 import com.cabify.store.product.R
 import com.cabify.store.product.presentation.data.HomeProductItemViewData
 import kotlinx.android.synthetic.main.item_home_product.*
@@ -22,6 +23,8 @@ class HomeProductViewHolderManager(
         holder.itemView.setOnClickListener { onClickAction(model.productId) }
         holder.title.text = model.title
         holder.price.text = model.price
+        holder.offerLabel.visibleOrGone(model.hasDiscount)
+
         Glide.with(holder.containerView.context)
             .load(model.image)
             .into(holder.image)

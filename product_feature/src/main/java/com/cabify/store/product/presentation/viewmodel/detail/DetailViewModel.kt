@@ -36,8 +36,8 @@ class DetailViewModel(
         addItemToCartUseCase.add(productId, count)
             .observeOn(schedulerProvider.ui())
             .subscribe(
-                {  },
-                {  }
+                { /* Handling to be implemented as part of future improvements. */ },
+                { /* Handling to be implemented as part of future improvements. */ }
             )
             .bind()
     }

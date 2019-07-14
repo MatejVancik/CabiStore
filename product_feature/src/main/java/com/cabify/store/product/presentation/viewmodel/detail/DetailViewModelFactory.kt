@@ -7,6 +7,7 @@ import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 import com.cabify.store.product.domain.GetProductUseCase
 import com.cabify.store.product.presentation.data.mapper.detail.ProductDetailViewDataMapper
 
+@Suppress("UNCHECKED_CAST")
 class DetailViewModelFactory(
     private val getProductUseCase: GetProductUseCase,
     private val detailViewDataMapper: ProductDetailViewDataMapper,
@@ -23,7 +24,7 @@ class DetailViewModelFactory(
                 schedulerProvider
             )
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-        }
-    } as T
+        } as T
+    }
 
 }

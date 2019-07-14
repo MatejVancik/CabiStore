@@ -6,6 +6,7 @@ import com.cabify.store.cart.domain.ObserveCartUseCase
 import com.cabify.store.cart.presentation.data.mapper.CartViewDataMapper
 import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 
+@Suppress("UNCHECKED_CAST")
 class CartViewModelFactory(
     private val observeCartUseCase: ObserveCartUseCase,
     private val schedulerProvider: AndroidSchedulerProvider,
@@ -20,8 +21,7 @@ class CartViewModelFactory(
                 cartViewDataMapper
             )
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-        }
-    } as T
-
+        } as T
+    }
 
 }

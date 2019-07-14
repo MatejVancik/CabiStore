@@ -21,15 +21,15 @@ class HomeViewDataMapper(
     private fun buildSections(items: List<ProductData>): List<HomeItemViewData> {
         val title = resourceProvider.getString(R.string.our_products)
         val titleItem = HomeTitleItemViewData(title.hashCode().toLong(), title)
-        val items = items.map {
+        val homeProducts = items.map {
             it.toHomeProductItemViewData(it.code.hashCode().toLong(), ProductResourceMapper.getProductResource(it.code))
         }
 
-        return mutableListOf<HomeItemViewData>(titleItem).apply { addAll(items) }
+        return mutableListOf<HomeItemViewData>(titleItem).apply { addAll(homeProducts) }
     }
 
     private fun ProductData.toHomeProductItemViewData(identifier: Long, imageRes: Int) = HomeProductItemViewData(
-        identifier, code, name, price.toPrice(), imageRes
+        identifier, code, name, price.toPrice(), imageRes, discountType != null
     )
 
 }
