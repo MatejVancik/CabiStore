@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+
+    <color name="cabiGray">#484848</color>
+    <color name="cabiGrayLight">#EAEAEA</color>
+    <color name="cabiGreen">#2CCC70</color>
+    <color name="cabiGreenDark">#1C8147</color>
+    <color name="cabiBlue">#22A3F7</color>
+
+</resources>

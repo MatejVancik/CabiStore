@@ -1,5 +1,6 @@
 package com.cabify.store.product.presentation.data.mapper
 
+import com.cabify.store.core.android.presentation.data.ProductResourceMapper
 import com.cabify.store.core.android.utils.ResourceProvider
 import com.cabify.store.core.extensions.toPrice
 import com.cabify.store.product.R
@@ -21,17 +22,10 @@ class HomeViewDataMapper(
         val title = resourceProvider.getString(R.string.our_products)
         val titleItem = HomeTitleItemViewData(title.hashCode().toLong(), title)
         val items = items.map {
-            it.toHomeProductItemViewData(it.code.hashCode().toLong(), getProductResource(it.code))
+            it.toHomeProductItemViewData(it.code.hashCode().toLong(), ProductResourceMapper.getProductResource(it.code))
         }
 
         return mutableListOf<HomeItemViewData>(titleItem).apply { addAll(items) }
-    }
-
-    private fun getProductResource(productId: String) = when (productId) {
-        "TSHIRT" -> R.drawable.product_tshirt_small
-        "MUG" -> R.drawable.product_mug_small
-        "VOUCHER" -> R.drawable.product_vouche_small
-        else -> R.drawable.product_default
     }
 
     private fun ProductData.toHomeProductItemViewData(identifier: Long, imageRes: Int) = HomeProductItemViewData(

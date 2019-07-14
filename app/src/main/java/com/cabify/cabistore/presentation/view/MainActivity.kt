@@ -1,5 +1,6 @@
 package com.cabify.cabistore.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,6 +13,7 @@ import com.cabify.store.product.presentation.di.ProductComponentProvider
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.HasAndroidInjector
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -29,6 +31,10 @@ class MainActivity : AppCompatActivity(), ProductComponentProvider, CartComponen
 
     override val cartComponent: CartComponent by lazy {
         cartComponentFactory.create()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -58,7 +58,6 @@ class CartItemDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Car
         viewModel.start(productId)
 
         deleteButton.setOnClickListener { viewModel.deleteCartItem() }
-
     }
 
     override fun onLoading(isLoading: Boolean) {
@@ -66,9 +65,9 @@ class CartItemDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<Car
     }
 
     override fun onNewData(viewData: CartItemDetailViewData) {
-
         nameTextView.text = viewData.name
         Glide.with(this).load(viewData.image).into(imageView)
+
         countPicker.countChangeListener = null
         countPicker.count = viewData.count
         countPicker.countChangeListener = { viewModel.setNumberOfItems(it) }

@@ -1,10 +1,10 @@
 package com.cabify.store.cart.presentation.data.mapper
 
-import com.cabify.store.cart.R
 import com.cabify.store.cart.domain.data.CartData
 import com.cabify.store.cart.domain.data.CartItemData
 import com.cabify.store.cart.presentation.data.CartItemViewData
 import com.cabify.store.cart.presentation.data.CartViewData
+import com.cabify.store.core.android.presentation.data.ProductResourceMapper
 import com.cabify.store.core.extensions.toPrice
 
 class CartViewDataMapper {
@@ -19,26 +19,21 @@ class CartViewDataMapper {
     }
 
     private fun cartItemDataToViewData(cartItemData: CartItemData): CartItemViewData {
-        val totalPrice = cartItemData.pricePerItem * cartItemData.count
-        val discount = cartItemData.discount?.invoke(cartItemData)
+        val discount = cartItemData.discount?.invoke(cartItemData) ?: 0F
+        val originalPrice = cartItemData.pricePerItem * cartItemData.count
+        val finalPrice = originalPrice - discount
+
+        val itemName = "${cartItemData.count}x ${cartItemData.name}"
+        val originalPriceToShow = originalPrice.takeIf { discount > 0 }?.toPrice()
 
         return CartItemViewData(
             cartItemData.code.hashCode().toLong(),
             cartItemData.code,
-            "${cartItemData.count}x ${cartItemData.name}",
-            totalPrice.toPrice(),
-            discount?.toPrice(),
-            getProductResource(cartItemData.code)
+            itemName,
+            finalPrice.toPrice(),
+            originalPriceToShow,
+            ProductResourceMapper.getProductResource(cartItemData.code)
         )
-    }
-
-    // Copied from com.cabify.store.product.presentation.data.mapper.HomeViewDataMapper.
-    // In real world, where image would be represented by URL this would come from DomainModel at this point.
-    private fun getProductResource(productId: String) = when (productId) {
-        "TSHIRT" -> R.drawable.product_tshirt_small
-        "MUG" -> R.drawable.product_mug_small
-        "VOUCHER" -> R.drawable.product_vouche_small
-        else -> R.drawable.product_default
     }
 
 }

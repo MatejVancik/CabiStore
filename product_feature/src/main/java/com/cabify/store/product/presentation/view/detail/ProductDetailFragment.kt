@@ -1,11 +1,13 @@
 package com.cabify.store.product.presentation.view.detail
 
+import android.app.Dialog
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import com.bumptech.glide.Glide
 import com.cabify.store.core.android.presentation.extensions.observe
 import com.cabify.store.core.android.presentation.extensions.obtainViewModel
@@ -14,11 +16,13 @@ import com.cabify.store.product.R
 import com.cabify.store.product.presentation.data.ProductDetailViewData
 import com.cabify.store.product.presentation.viewmodel.detail.DetailViewModel
 import com.cabify.store.product.presentation.viewmodel.detail.DetailViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import javax.inject.Inject
 
-class ProductDetailFragment : DialogFragment(), ViewDataObserver<ProductDetailViewData> {
+class ProductDetailFragment : BottomSheetDialogFragment(), ViewDataObserver<ProductDetailViewData> {
 
     companion object {
         private const val KEY_PRODUCT_ID = "productId"
@@ -39,8 +43,23 @@ class ProductDetailFragment : DialogFragment(), ViewDataObserver<ProductDetailVi
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_product_detail, null, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_product_detail, container, false)
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).apply {
+            setOnShowListener {
+                val bottomSheetInternal = findViewById<ViewGroup>(R.id.design_bottom_sheet).apply {
+                    layoutParams.height = MATCH_PARENT
+                }
+
+                BottomSheetBehavior.from(bottomSheetInternal).apply {
+                    skipCollapsed = true
+                    peekHeight = Resources.getSystem().displayMetrics.heightPixels
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

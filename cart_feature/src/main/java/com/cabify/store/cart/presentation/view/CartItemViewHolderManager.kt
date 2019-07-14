@@ -1,5 +1,6 @@
 package com.cabify.store.cart.presentation.view
 
+import android.graphics.Paint
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.cabify.store.cart.R
@@ -8,6 +9,7 @@ import com.cabify.store.core.android.presentation.adapter.BasicViewHolder
 import com.cabify.store.core.android.presentation.adapter.ViewHolderManager
 import com.cabify.store.core.android.presentation.extensions.inflateView
 import kotlinx.android.synthetic.main.item_cart.*
+import kotlinx.android.synthetic.main.item_cart.view.*
 
 class CartItemViewHolderManager(
     private val onItemClick: (CartItemViewData) -> Unit
@@ -15,6 +17,7 @@ class CartItemViewHolderManager(
 
     override fun createViewHolder(parent: ViewGroup): BasicViewHolder {
         val view = parent.inflateView(R.layout.item_cart)
+        view.originalPrice.apply { paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
         return BasicViewHolder(view)
     }
 
@@ -23,7 +26,7 @@ class CartItemViewHolderManager(
 
         holder.title.text = model.title
         holder.price.text = model.finalPrice
-        holder.discount.text = model.discount
+        holder.originalPrice.text = model.originalPrice
 
         Glide.with(holder.itemView.context).load(model.image).into(holder.image)
     }

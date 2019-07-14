@@ -7,7 +7,11 @@ import com.cabify.cabistore.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import io.github.inflationx.calligraphy3.CalligraphyConfig
 import javax.inject.Inject
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor
+import io.github.inflationx.viewpump.ViewPump
+
 
 class CabiStoreApp : Application(), AppComponentProvider, HasAndroidInjector {
 
@@ -22,6 +26,17 @@ class CabiStoreApp : Application(), AppComponentProvider, HasAndroidInjector {
     override fun onCreate() {
         super.onCreate()
         appComponent.inject(this)
+
+        ViewPump.init(
+            ViewPump.builder().addInterceptor(
+                CalligraphyInterceptor(
+                    CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/regular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+                )
+            ).build()
+        )
     }
 
     override fun androidInjector(): AndroidInjector<Any> {

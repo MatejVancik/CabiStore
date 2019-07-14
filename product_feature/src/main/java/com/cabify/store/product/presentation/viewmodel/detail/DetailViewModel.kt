@@ -1,10 +1,10 @@
 package com.cabify.store.product.presentation.viewmodel.detail
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cabify.store.cart.domain.AddItemToCartUseCase
-import com.cabify.store.core.android.presentation.viewdata.ViewData
 import com.cabify.store.core.android.presentation.base.BaseViewModel
+import com.cabify.store.core.android.presentation.base.ViewDataHolder
+import com.cabify.store.core.android.presentation.viewdata.ViewData
 import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 import com.cabify.store.product.domain.GetProductUseCase
 import com.cabify.store.product.presentation.data.ProductDetailViewData
@@ -15,13 +15,9 @@ class DetailViewModel(
     private val detailViewDataMapper: ProductDetailViewDataMapper,
     private val addItemToCartUseCase: AddItemToCartUseCase,
     private val schedulerProvider: AndroidSchedulerProvider
-) : BaseViewModel() {
+) : BaseViewModel(), ViewDataHolder<ProductDetailViewData> {
 
-    private val internalData = MutableLiveData<ViewData<ProductDetailViewData>>().apply {
-        value = ViewData.Loading()
-    }
-    val viewData: LiveData<ViewData<ProductDetailViewData>>
-        get() = internalData
+    override val viewData = MutableLiveData<ViewData<ProductDetailViewData>>().apply { value = ViewData.Loading() }
 
     private lateinit var productId: String
 
@@ -32,10 +28,7 @@ class DetailViewModel(
             .observeOn(schedulerProvider.computation())
             .map(detailViewDataMapper::productToDetailViewData)
             .observeOn(schedulerProvider.ui())
-            .subscribe(
-                { internalData.value = ViewData.Data(it) },
-                { internalData.value = ViewData.Error(it) }
-            )
+            .subscribeToViewData()
             .bind()
     }
 

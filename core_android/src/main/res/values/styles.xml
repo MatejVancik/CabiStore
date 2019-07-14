@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Regular" parent="android:TextAppearance">
+        <item name="android:textColor">@color/cabiGray</item>
+        <item name="fontPath">fonts/regular.ttf</item>
+    </style>
+
+    <style name="TextAppearance.Bold" parent="android:TextAppearance">
+        <item name="fontPath">fonts/bold.ttf</item>
+    </style>
+
+    <style name="TextAppearance.Light" parent="android:TextAppearance">
+        <item name="fontPath">fonts/light.ttf</item>
+    </style>
+
+</resources>

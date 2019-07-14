@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,46 +9,113 @@
         android:id="@+id/itemsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/default_spacing_small"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="@dimen/default_spacing"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/totalPriceTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_cart" />
+
+    <TextView
+        android:id="@+id/totalPriceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing_small"
+        android:gravity="start|center_vertical"
+        android:text="@string/total_price"
+        android:textAppearance="@style/TextAppearance.Light"
+        app:layout_constraintBottom_toTopOf="@id/discountLabel"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/totalPriceTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:gravity="end|center_vertical"
+        android:textAppearance="@style/TextAppearance.Light"
+        app:layout_constraintBottom_toBottomOf="@id/totalPriceLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/totalPriceLabel"
+        app:layout_constraintTop_toTopOf="@id/totalPriceLabel"
+        tools:text="200,00€" />
+
+    <TextView
+        android:id="@+id/discountLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/discountTextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing_small"
+        android:gravity="start|center_vertical"
+        android:text="@string/discount"
+        android:textAppearance="@style/TextAppearance.Light"
+        app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/discountTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/divider"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:gravity="end|center_vertical"
+        android:textAppearance="@style/TextAppearance.Light"
+        app:layout_constraintBottom_toBottomOf="@id/discountLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/discountLabel"
+        app:layout_constraintTop_toTopOf="@id/discountLabel"
+        tools:text="20,00€" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000"
-        app:layout_constraintBottom_toTopOf="@id/toPayTextView" />
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing_small"
+        android:background="@color/cabiGray"
+        app:layout_constraintBottom_toTopOf="@id/toPayLabel" />
+
+
+    <TextView
+        android:id="@+id/toPayLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:text="@string/to_pay"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/toPayTextView"
+        app:layout_constraintEnd_toStartOf="@id/payButton"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/toPayTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:lines="2"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:textAppearance="@style/TextAppearance.Bold"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/payButton"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="240,00€" />
 
     <Button
         android:id="@+id/payButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:backgroundTint="@color/cabiGreen"
+        android:text="@string/buy_now"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toPayLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

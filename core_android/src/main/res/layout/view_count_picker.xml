@@ -3,8 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="horizontal"
     tools:parentTag="android.widget.LinearLayout">
+
+    <ImageButton
+        android:id="@+id/decreaseButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="@dimen/button_min_size"
+        android:layout_height="@dimen/button_min_size"
+        android:src="@drawable/ic_remove" />
+
+    <TextView
+        android:id="@+id/countText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_min_size"
+        android:background="@drawable/rectangle_rounder_corners"
+        android:gravity="center"
+        android:minWidth="@dimen/button_min_size"
+        android:textSize="18sp"
+        tools:text="0" />
 
     <ImageButton
         android:id="@+id/increaseButton"
@@ -13,19 +31,4 @@
         android:layout_height="@dimen/button_min_size"
         android:src="@drawable/ic_add" />
 
-    <TextView
-        android:id="@+id/countText"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/button_min_size"
-        android:gravity="center"
-        android:minWidth="@dimen/button_min_size"
-        android:textSize="18sp"
-        tools:text="0" />
-
-    <ImageButton
-        android:id="@+id/decreaseButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="@dimen/button_min_size"
-        android:layout_height="@dimen/button_min_size"
-        android:src="@drawable/ic_remove" />
 </merge>

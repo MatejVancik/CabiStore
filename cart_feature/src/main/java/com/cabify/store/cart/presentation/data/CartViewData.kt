@@ -14,6 +14,6 @@ data class CartItemViewData(
     val code: String,
     val title: String,
     val finalPrice: String,
-    val discount: String?,
+    val originalPrice: String?,
     val image: Int
 ): Identifiable

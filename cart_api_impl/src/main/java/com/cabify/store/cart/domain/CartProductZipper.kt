@@ -21,8 +21,9 @@ class CartProductZipper : BiFunction<List<CartItemData>, List<ProductData>, Cart
         if (items.isEmpty()) return CartData(items, 0F, 0F)
 
         val fullPrice = items.map { it.pricePerItem * it.count }.reduce { acc, price -> acc + price }
-        val discountedPrice = items.mapNotNull { it.discount?.invoke(it) }.reduce { acc, discount -> acc + discount }
-        val discount = fullPrice - discountedPrice
+        val discount = items.mapNotNull { it.discount?.invoke(it) }
+            .takeIf { it.isNotEmpty() }
+            ?.reduce { acc, discount -> acc + discount } ?: 0F
 
         return CartData(items, fullPrice, discount)
     }

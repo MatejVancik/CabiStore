@@ -1,6 +1,9 @@
 package com.cabify.store.cart.domain.data
 
-enum class Discount(private val calculation: (CartItemData) -> Float) {
+/**
+ * @param finalPriceCalculation calculates final price of all units of specific cart item
+ */
+enum class Discount(private val finalPriceCalculation: (CartItemData) -> Float) {
 
     /**
      * Discount rule - every second unit of this product is for free.
@@ -20,6 +23,8 @@ enum class Discount(private val calculation: (CartItemData) -> Float) {
     /**
      * Calculates final price for given [CartItemData].
      */
-    operator fun invoke(product: CartItemData): Float = calculation(product)
+    operator fun invoke(product: CartItemData): Float {
+        return product.count * product.pricePerItem - finalPriceCalculation(product)
+    }
 
 }

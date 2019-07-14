@@ -21,6 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="#eee"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/nav_items" />
 

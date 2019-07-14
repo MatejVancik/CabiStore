@@ -5,6 +5,6 @@ data class CartItemDetailViewData(
     val image: Int,
     val count: Int,
     val pricePerItem: String,
-    val discount: String,
+    val discount: String?,
     val totalPrice: String
 )
