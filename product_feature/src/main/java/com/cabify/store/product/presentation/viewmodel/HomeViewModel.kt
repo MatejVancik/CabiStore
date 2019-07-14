@@ -3,7 +3,7 @@ package com.cabify.store.product.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cabify.store.cart.domain.AddItemToCartUseCase
-import com.cabify.store.core.android.presentation.ViewData
+import com.cabify.store.core.android.presentation.viewdata.ViewData
 import com.cabify.store.core.android.presentation.base.BaseViewModel
 import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 import com.cabify.store.product.domain.GetAllProductsUseCase

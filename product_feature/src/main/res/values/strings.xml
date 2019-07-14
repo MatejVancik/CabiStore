@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">product_feature</string>
     <string name="our_products">Our products</string>
+    <string name="discount_one_plus_one">Buy one %s and you\'ll get second for free.</string>
+    <string name="discount_three_for_less">Buy at least 3 pieces of %s and you\'ll get each only for %s!</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="special_offer">Special offer</string>
 </resources>

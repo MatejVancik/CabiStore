@@ -3,7 +3,7 @@ package com.cabify.store.core.android.presentation.extensions
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.cabify.store.core.android.presentation.ViewData
+import com.cabify.store.core.android.presentation.viewdata.ViewData
 import com.cabify.store.core.android.presentation.viewdata.ViewDataObserver
 
 fun <T> LiveData<ViewData<T>>.observe(

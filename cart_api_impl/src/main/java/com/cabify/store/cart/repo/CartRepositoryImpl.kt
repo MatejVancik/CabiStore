@@ -5,33 +5,59 @@ import com.cabify.store.cart.repo.data.CartItemDto
 import com.cabify.store.cart.repo.data.mapper.CartMapper
 import com.cabify.store.core.utils.SchedulerProvider
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 
 class CartRepositoryImpl(
     private val cartMapper: CartMapper,
     private val schedulerProvider: SchedulerProvider
-): CartRepository {
+) : CartRepository {
 
     private val cartData = mutableMapOf<String, CartItemDto>()
 
+    private val dataSubject = BehaviorSubject.createDefault(listOf<CartItemData>())
+
+    private fun notifyUpdate() {
+        val newData = cartData.values.toList().map(cartMapper::dtoToCartItemData)
+        dataSubject.onNext(newData)
+    }
+
+    override fun observeCartItems(): Observable<List<CartItemData>> {
+        return dataSubject
+    }
+
     override fun getCartItems(): Single<List<CartItemData>> {
-        return Single.fromCallable { cartData.values.toList().map(cartMapper::dtoToCartItemData) }
-            .subscribeOn(schedulerProvider.computation())
+        return dataSubject.single(listOf())
     }
 
     override fun addToCart(productId: String, count: Int): Completable {
-        return Completable.fromAction { cartData[productId] = CartItemDto(productId, count) }
+        return Completable.fromAction {
+            val newCount = count + (cartData[productId]?.count ?: 0)
+            cartData[productId] = CartItemDto(productId, newCount)
+            notifyUpdate()
+        }.subscribeOn(schedulerProvider.computation())
     }
 
-    override fun updateCartItem(cartItem: CartItemData): Completable {
-        // Simple implementation which simply replaces (or adds) existing item in current cart. More advance
-        // repository implementations can do more, e.g. throw an error if item doesn't exist yet or delete an item
-        // if count of items in cartItemData is 0.
-        return addToCart(cartItem.code, cartItem.count)
+    override fun getCartItem(productId: String): Single<CartItemData> {
+        return Single.fromCallable {
+            val item = cartData[productId] ?: throw IllegalArgumentException("Product not in cart!")
+            cartMapper.dtoToCartItemData(item)
+        }.subscribeOn(schedulerProvider.computation())
     }
 
-    override fun deleteCartItem(cartItem: CartItemData): Completable {
-        return Completable.fromAction { cartData.remove(cartItem.code) }
+    override fun updateCartItem(productId: String, count: Int): Completable {
+        return Completable.fromAction {
+            cartData[productId] = CartItemDto(productId, count)
+            notifyUpdate()
+        }.subscribeOn(schedulerProvider.computation())
+    }
+
+    override fun deleteCartItem(productId: String): Completable {
+        return Completable.fromAction {
+            cartData.remove(productId)
+            notifyUpdate()
+        }.subscribeOn(schedulerProvider.computation())
     }
 
 }

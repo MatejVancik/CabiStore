@@ -5,8 +5,11 @@ import com.cabify.store.core.android.utils.AndroidSchedulerProvider
 import com.cabify.store.core.android.utils.ResourceProvider
 import com.cabify.store.core.di.FeatureScope
 import com.cabify.store.product.domain.GetAllProductsUseCase
+import com.cabify.store.product.domain.GetProductUseCase
 import com.cabify.store.product.presentation.data.mapper.HomeViewDataMapper
+import com.cabify.store.product.presentation.data.mapper.detail.ProductDetailViewDataMapper
 import com.cabify.store.product.presentation.viewmodel.HomeViewModelFactory
+import com.cabify.store.product.presentation.viewmodel.detail.DetailViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -28,6 +31,23 @@ class ProductModule {
     @FeatureScope
     fun provideHomeViewDataMapper(resourceProvider: ResourceProvider): HomeViewDataMapper {
         return HomeViewDataMapper(resourceProvider)
+    }
+
+    @Provides
+    @FeatureScope
+    fun provideDetailViewModelFactory(
+        getProductUseCase: GetProductUseCase,
+        detailViewDataMapper: ProductDetailViewDataMapper,
+        addItemToCartUseCase: AddItemToCartUseCase,
+        schedulerProvider: AndroidSchedulerProvider
+    ): DetailViewModelFactory {
+        return DetailViewModelFactory(getProductUseCase, detailViewDataMapper, addItemToCartUseCase, schedulerProvider)
+    }
+
+    @Provides
+    @FeatureScope
+    fun provideProductDetailViewDataMapper(resourceProvider: ResourceProvider): ProductDetailViewDataMapper {
+        return ProductDetailViewDataMapper(resourceProvider)
     }
 
 }

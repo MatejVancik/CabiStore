@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">cart_feature</string>
+    <string name="price_per_item">Price per item</string>
+    <string name="discount">Discount</string>
+    <string name="total_price">Total price</string>
+    <string name="error_delete_cart_item">Could not delete item.</string>
+    <string name="error_update_cart_item">Could not update item.</string>
 </resources>

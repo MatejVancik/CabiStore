@@ -9,13 +9,16 @@ class ProductRepositoryImpl(
     private val productRemoteApi: ProductRemoteApi,
     private val schedulerProvider: SchedulerProvider,
     private val productMapper: ProductMapper
-): ProductRepository {
+) : ProductRepository {
+
+    var cache: List<ProductData>? = null
 
     override fun getProducts(): Single<List<ProductData>> {
-        return productRemoteApi.getProductsList()
+        return cache?.let { Single.just(it) } ?: productRemoteApi.getProductsList()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.computation())
             .map { it.products.map(productMapper::dtoToProductData) }
+            .doOnSuccess { cache = it }
     }
 
 }

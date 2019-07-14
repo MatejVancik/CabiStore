@@ -1,15 +1,15 @@
 package com.cabify.store.core.android.presentation.extensions
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
-fun <T : ViewModel> Fragment.obtainViewModel(
-    factory: ViewModelProvider.Factory,
-    viewModelClass: Class<T>
+inline fun <reified T : ViewModel> Fragment.obtainViewModel(
+    factory: ViewModelProvider.Factory
 ): T {
-    return ViewModelProviders.of(this, factory).get(viewModelClass)
+    return ViewModelProviders.of(this, factory).get(T::class.java)
 }
 
 fun <T : ViewModel> Fragment.obtainViewModel(
@@ -25,4 +25,8 @@ fun <T : ViewModel> Fragment.obtainActivityViewModel(
     viewModelClass: Class<T>
 ): T {
     return ViewModelProviders.of(activity!!, factory).get(viewModelClass)
+}
+
+fun Fragment.toast(resource: Int, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(requireContext(), resource, length).show()
 }

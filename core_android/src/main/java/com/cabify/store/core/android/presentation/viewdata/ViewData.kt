@@ -1,4 +1,4 @@
-package com.cabify.store.core.android.presentation
+package com.cabify.store.core.android.presentation.viewdata
 
 sealed class ViewData<T> {
 

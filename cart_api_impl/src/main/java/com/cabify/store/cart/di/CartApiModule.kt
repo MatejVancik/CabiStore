@@ -7,6 +7,7 @@ import com.cabify.store.cart.repo.data.mapper.CartMapper
 import com.cabify.store.cart.repo.data.mapper.CartMapperImpl
 import com.cabify.store.core.utils.SchedulerProvider
 import com.cabify.store.product.domain.GetAllProductsUseCase
+import com.cabify.store.product.domain.GetProductUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,6 +22,16 @@ class CartApiModule {
         schedulerProvider: SchedulerProvider
     ): AddItemToCartUseCase {
         return AddItemToCartUseCaseImpl(cartRepository, schedulerProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCartItemUseCaseImpl(
+        cartRepository: CartRepository,
+        getProductUseCase: GetProductUseCase,
+        schedulerProvider: SchedulerProvider
+    ): GetCartItemUseCase {
+        return GetCartItemUseCaseImpl(cartRepository, getProductUseCase, schedulerProvider)
     }
 
     @Provides
@@ -40,6 +51,16 @@ class CartApiModule {
         getAllProductsUseCase: GetAllProductsUseCase
     ): GetCartUseCase {
         return GetCartUseCaseImpl(cartRepository, schedulerProvider, getAllProductsUseCase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideObserveCartUseCase(
+        cartRepository: CartRepository,
+        getAllProductsUseCase: GetAllProductsUseCase,
+        schedulerProvider: SchedulerProvider
+    ): ObserveCartUseCase {
+        return ObserveCartUseCaseImpl(cartRepository, getAllProductsUseCase, schedulerProvider)
     }
 
     @Provides

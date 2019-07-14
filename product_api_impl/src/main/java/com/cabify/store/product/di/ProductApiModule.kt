@@ -3,6 +3,8 @@ package com.cabify.store.product.di
 import com.cabify.store.core.utils.SchedulerProvider
 import com.cabify.store.product.domain.GetAllProductsUseCase
 import com.cabify.store.product.domain.GetAllProductsUseCaseImpl
+import com.cabify.store.product.domain.GetProductUseCase
+import com.cabify.store.product.domain.GetProductUseCaseImpl
 import com.cabify.store.product.repo.ProductRemoteApi
 import com.cabify.store.product.repo.ProductRepository
 import com.cabify.store.product.repo.ProductRepositoryImpl
@@ -23,10 +25,20 @@ class ProductApiModule {
 
     @Provides
     @Singleton
-    fun provideGetAllProductsUseCase(
-        productRepository: ProductRepository
-    ): GetAllProductsUseCase {
+    fun provideGetAllProductsUseCase(productRepository: ProductRepository): GetAllProductsUseCase {
         return GetAllProductsUseCaseImpl(productRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetProductUseCaseImpl(getAllProductsUseCase: GetAllProductsUseCase): GetProductUseCaseImpl {
+        return GetProductUseCaseImpl(getAllProductsUseCase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetProductUseCase(getAllProductsUseCase: GetAllProductsUseCase): GetProductUseCase {
+        return GetProductUseCaseImpl(getAllProductsUseCase)
     }
 
     @Provides
@@ -47,9 +59,7 @@ class ProductApiModule {
 
     @Provides
     @Singleton
-    fun provideProductRemoteApi(
-        @Named("productApi") retrofit: Retrofit
-    ): ProductRemoteApi {
+    fun provideProductRemoteApi(@Named("productApi") retrofit: Retrofit): ProductRemoteApi {
         return retrofit.create(ProductRemoteApi::class.java)
     }
 
@@ -61,9 +71,7 @@ class ProductApiModule {
     @Named("productApi")
     @Provides
     @Singleton
-    fun provideProductApiRetrofit(
-        @Named("productApi") httpClient: OkHttpClient
-    ): Retrofit {
+    fun provideProductApiRetrofit(@Named("productApi") httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.myjson.com")
             .client(httpClient)

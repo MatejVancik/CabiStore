@@ -11,6 +11,7 @@ import com.cabify.store.core.android.presentation.viewdata.ViewDataObserver
 import com.cabify.store.product.R
 import com.cabify.store.product.presentation.data.HomeItemViewData
 import com.cabify.store.product.presentation.data.HomeViewData
+import com.cabify.store.product.presentation.view.detail.ProductDetailFragment
 import com.cabify.store.product.presentation.viewmodel.HomeViewModel
 import com.cabify.store.product.presentation.viewmodel.HomeViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -36,7 +37,7 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = obtainViewModel(vmFactory, HomeViewModel::class.java)
+        viewModel = obtainViewModel(vmFactory)
         adapter = BasicAdapter(
             HomeProductViewHolderManager(::onProductClicked),
             HomeTitleViewHolderManager()
@@ -61,7 +62,8 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
     }
 
     private fun onProductClicked(productId: String) {
-        viewModel.addToCart(productId)
+        ProductDetailFragment.newInstance(productId)
+            .show(childFragmentManager, "ProductDetailFragment")
     }
 
 }

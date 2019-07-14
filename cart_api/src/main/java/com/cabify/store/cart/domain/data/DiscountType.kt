@@ -17,6 +17,9 @@ enum class Discount(private val calculation: (CartItemData) -> Float) {
         if (it.count >= 3) originalPrice * 0.95f else originalPrice
     });
 
+    /**
+     * Calculates final price for given [CartItemData].
+     */
     operator fun invoke(product: CartItemData): Float = calculation(product)
 
 }

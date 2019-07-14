@@ -6,6 +6,7 @@ import android.view.View
 import com.cabify.store.cart.R
 import com.cabify.store.cart.presentation.data.CartItemViewData
 import com.cabify.store.cart.presentation.data.CartViewData
+import com.cabify.store.cart.presentation.view.detail.CartItemDetailFragment
 import com.cabify.store.cart.presentation.viewmodel.CartViewModel
 import com.cabify.store.cart.presentation.viewmodel.CartViewModelFactory
 import com.cabify.store.core.android.presentation.adapter.BasicAdapter
@@ -43,13 +44,14 @@ class CartFragment : BaseFragment(), ViewDataObserver<CartViewData> {
 
         itemsRecyclerView.adapter = adapter
 
-        viewModel = obtainViewModel(vmFactory, CartViewModel::class.java)
+        viewModel = obtainViewModel(vmFactory)
         viewModel.viewData.observe(this, this)
         viewModel.start()
     }
 
     private fun onCartItemClicked(cartItemViewData: CartItemViewData) {
-
+        CartItemDetailFragment.newInstance(cartItemViewData.code)
+            .show(childFragmentManager, CartItemDetailFragment::class.java.name)
     }
 
     override fun onLoading(isLoading: Boolean) {
