@@ -45,16 +45,6 @@ class CartApiModule {
 
     @Provides
     @Singleton
-    fun provideGetCartUseCase(
-        cartRepository: CartRepository,
-        schedulerProvider: SchedulerProvider,
-        getAllProductsUseCase: GetAllProductsUseCase
-    ): GetCartUseCase {
-        return GetCartUseCaseImpl(cartRepository, schedulerProvider, getAllProductsUseCase)
-    }
-
-    @Provides
-    @Singleton
     fun provideObserveCartUseCase(
         cartRepository: CartRepository,
         getAllProductsUseCase: GetAllProductsUseCase,

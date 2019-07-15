@@ -9,8 +9,6 @@ interface CartRepository {
 
     fun observeCartItems(): Observable<List<CartItemData>>
 
-    fun getCartItems(): Single<List<CartItemData>>
-
     fun addToCart(productId: String, count: Int): Completable
 
     fun getCartItem(productId: String): Single<CartItemData>

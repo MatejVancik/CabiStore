@@ -27,10 +27,6 @@ class CartRepositoryImpl(
         return dataSubject
     }
 
-    override fun getCartItems(): Single<List<CartItemData>> {
-        return dataSubject.single(listOf())
-    }
-
     override fun addToCart(productId: String, count: Int): Completable {
         return Completable.fromAction {
             val newCount = count + (cartData[productId]?.count ?: 0)
