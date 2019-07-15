@@ -25,20 +25,20 @@ class ProductApiModule {
 
     @Provides
     @Singleton
-    fun provideGetAllProductsUseCase(productRepository: ProductRepository): GetAllProductsUseCase {
-        return GetAllProductsUseCaseImpl(productRepository)
+    fun provideGetAllProductsUseCase(
+        productRepository: ProductRepository,
+        schedulerProvider: SchedulerProvider
+    ): GetAllProductsUseCase {
+        return GetAllProductsUseCaseImpl(productRepository, schedulerProvider)
     }
 
     @Provides
     @Singleton
-    fun provideGetProductUseCaseImpl(getAllProductsUseCase: GetAllProductsUseCase): GetProductUseCaseImpl {
-        return GetProductUseCaseImpl(getAllProductsUseCase)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetProductUseCase(getAllProductsUseCase: GetAllProductsUseCase): GetProductUseCase {
-        return GetProductUseCaseImpl(getAllProductsUseCase)
+    fun provideGetProductUseCase(
+        getAllProductsUseCase: GetAllProductsUseCase,
+        schedulerProvider: SchedulerProvider
+    ): GetProductUseCase {
+        return GetProductUseCaseImpl(getAllProductsUseCase, schedulerProvider)
     }
 
     @Provides

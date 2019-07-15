@@ -11,7 +11,8 @@ class ProductRepositoryImpl(
     private val productMapper: ProductMapper
 ) : ProductRepository {
 
-    var cache: List<ProductData>? = null
+    // Very primitive caching implementation. Should be replaced by real solution once caching requirements are clear.
+    private var cache: List<ProductData>? = null
 
     override fun getProducts(): Single<List<ProductData>> {
         return cache?.let { Single.just(it) } ?: productRemoteApi.getProductsList()
