@@ -1,10 +1,10 @@
 package com.cabify.store.cart.domain
 
-import com.cabify.store.cart.domain.data.CartItemData
+import com.cabify.store.cart.mugCartItemData
+import com.cabify.store.cart.mugProductData
 import com.cabify.store.cart.repo.CartRepository
 import com.cabify.store.core.utils.SchedulerProviderTestImpl
 import com.cabify.store.product.domain.GetProductUseCase
-import com.cabify.store.product.domain.data.ProductData
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -27,20 +27,16 @@ class GetCartItemUseCaseImplTest {
     private val schedulerProvider = SchedulerProviderTestImpl()
 
     private lateinit var getCartItemUseCase: GetCartItemUseCase
-    private lateinit var mugProduct: ProductData
-    private lateinit var mugCartItem: CartItemData
 
     @Before
     fun setup() {
         getCartItemUseCase = GetCartItemUseCaseImpl(cartRepository, getProductUseCase, schedulerProvider)
-        mugProduct = ProductData("MUG", "Mug", 5f, null)
-        mugCartItem = CartItemData("MUG", "Mug", 5F, 2)
     }
 
     @Test
     fun `get existing cart item and product`() {
-        whenever(getProductUseCase.getProduct("MUG")).thenReturn(Single.just(mugProduct))
-        whenever(cartRepository.getCartItem("MUG")).thenReturn(Single.just(mugCartItem))
+        whenever(getProductUseCase.getProduct("MUG")).thenReturn(Single.just(mugProductData))
+        whenever(cartRepository.getCartItem("MUG")).thenReturn(Single.just(mugCartItemData))
 
         getCartItemUseCase.get("MUG")
             .test()
@@ -54,7 +50,7 @@ class GetCartItemUseCaseImplTest {
     @Test
     fun `get existing cart item with missing product`() {
         whenever(getProductUseCase.getProduct("MUG")).thenReturn(Single.error(Error()))
-        whenever(cartRepository.getCartItem("MUG")).thenReturn(Single.just(mugCartItem))
+        whenever(cartRepository.getCartItem("MUG")).thenReturn(Single.just(mugCartItemData))
 
         getCartItemUseCase.get("MUG")
             .test()
@@ -66,7 +62,7 @@ class GetCartItemUseCaseImplTest {
 
     @Test
     fun `get missing cart item with existing product`() {
-        whenever(getProductUseCase.getProduct("MUG")).thenReturn(Single.just(mugProduct))
+        whenever(getProductUseCase.getProduct("MUG")).thenReturn(Single.just(mugProductData))
         whenever(cartRepository.getCartItem("MUG")).thenReturn(Single.error(Error()))
 
         getCartItemUseCase.get("MUG")

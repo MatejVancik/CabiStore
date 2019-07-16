@@ -2,6 +2,8 @@ package com.cabify.store.product.repo
 
 import com.cabify.store.core.utils.SchedulerProviderTestImpl
 import com.cabify.store.product.domain.data.ProductData
+import com.cabify.store.product.mugProductData
+import com.cabify.store.product.mugProductDto
 import com.cabify.store.product.repo.data.ProductDto
 import com.cabify.store.product.repo.data.ProductListDto
 import com.cabify.store.product.repo.data.mapper.ProductMapper
@@ -33,14 +35,11 @@ class ProductRepositoryImplTest {
 
     @Test
     fun `get products successfully`() {
-        val mugDto = ProductDto("MUG", "Mug", 7f)
-        val dto = ProductListDto(listOf(mugDto))
-
-        val mugData = ProductData("MUG", "Mug", 7f)
-        val products = listOf(mugData)
+        val dto = ProductListDto(listOf(mugProductDto))
+        val products = listOf(mugProductData)
 
         whenever(productRemoteApi.getProductsList()).thenReturn(Single.just(dto))
-        whenever(productMapper.dtoToProductData(mugDto)).thenReturn(mugData)
+        whenever(productMapper.dtoToProductData(mugProductDto)).thenReturn(mugProductData)
 
         repo.getProducts()
             .test()

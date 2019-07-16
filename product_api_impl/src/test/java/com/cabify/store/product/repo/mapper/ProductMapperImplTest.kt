@@ -1,7 +1,7 @@
 package com.cabify.store.product.repo.mapper
 
-import com.cabify.store.product.domain.data.ProductData
-import com.cabify.store.product.repo.data.ProductDto
+import com.cabify.store.product.mugProductData
+import com.cabify.store.product.mugProductDto
 import com.cabify.store.product.repo.data.mapper.ProductMapperImpl
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -18,11 +18,8 @@ class ProductMapperImplTest {
 
     @Test
     fun `dto to product data`() {
-        val dto = ProductDto("MUG", "Mug", 7f)
-        val expectedResult = ProductData("MUG", "Mug", 7f)
+        val actualResult = mapper.dtoToProductData(mugProductDto)
 
-        val actualResult = mapper.dtoToProductData(dto)
-
-        assertEquals(actualResult, expectedResult)
+        assertEquals(actualResult, mugProductData)
     }
 }

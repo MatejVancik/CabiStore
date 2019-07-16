@@ -2,6 +2,8 @@ package com.cabify.store.product.domain
 
 import com.cabify.store.core.utils.SchedulerProviderTestImpl
 import com.cabify.store.product.domain.data.ProductData
+import com.cabify.store.product.mugProductData
+import com.cabify.store.product.tshirtProductData
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Before
@@ -27,14 +29,12 @@ class GetProductUseCaseImplTest {
 
     @Test
     fun `get existing product`() {
-        val tshirt = ProductData("TSHIRT", "Tshirt", 20F)
-        val mug = ProductData("MUG", "Mug", 5F)
-        whenever(getAllProductsUseCase.get()).thenReturn(Single.just(listOf(tshirt, mug)))
+        whenever(getAllProductsUseCase.get()).thenReturn(Single.just(listOf(tshirtProductData, mugProductData)))
 
         getProductUseCase.getProduct("TSHIRT")
             .test()
             .assertNoErrors()
-            .assertValue { it == tshirt }
+            .assertValue { it == tshirtProductData }
     }
 
     @Test

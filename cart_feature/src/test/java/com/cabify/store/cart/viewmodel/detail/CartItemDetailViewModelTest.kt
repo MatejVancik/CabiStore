@@ -5,6 +5,7 @@ import com.cabify.store.cart.domain.DeleteCartItemUseCase
 import com.cabify.store.cart.domain.GetCartItemUseCase
 import com.cabify.store.cart.domain.UpdateCartItemUseCase
 import com.cabify.store.cart.domain.data.CartItemData
+import com.cabify.store.cart.mugCartItemDetailViewData
 import com.cabify.store.cart.presentation.data.CartItemDetailViewData
 import com.cabify.store.cart.presentation.data.DeleteFailed
 import com.cabify.store.cart.presentation.data.DismissDetail
@@ -49,8 +50,6 @@ class CartItemDetailViewModelTest {
 
     private lateinit var viewModel: CartItemDetailViewModel
 
-    private val resultViewData = CartItemDetailViewData("MUG", 0, 1, "", null, "")
-
     @Before
     fun setup() {
         viewModel = CartItemDetailViewModel(
@@ -66,7 +65,7 @@ class CartItemDetailViewModelTest {
     fun `load view data successfully`() {
         startViewModelSuccessfully()
 
-        Assert.assertEquals(resultViewData, (viewModel.viewData.value as ViewData.Data).content)
+        Assert.assertEquals(mugCartItemDetailViewData, (viewModel.viewData.value as ViewData.Data).content)
     }
 
     @Test
@@ -115,7 +114,7 @@ class CartItemDetailViewModelTest {
 
     private fun startViewModelSuccessfully() {
         whenever(getCartItemUseCase.get(any())).thenReturn(Single.just(CartItemData("MUG")))
-        whenever(cartItemDetailViewDataMapper.cartItemToDetailViewData((any()))).thenReturn(resultViewData)
+        whenever(cartItemDetailViewDataMapper.cartItemToDetailViewData((any()))).thenReturn(mugCartItemDetailViewData)
 
         viewModel.start("MUG")
     }

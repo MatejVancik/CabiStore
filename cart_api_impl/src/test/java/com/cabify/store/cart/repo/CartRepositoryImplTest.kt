@@ -1,8 +1,11 @@
 package com.cabify.store.cart.repo
 
 import com.cabify.store.cart.domain.data.CartItemData
-import com.cabify.store.cart.repo.data.CartItemDto
+import com.cabify.store.cart.mugCartItemData
+import com.cabify.store.cart.mugCartItemDto
 import com.cabify.store.cart.repo.data.mapper.CartMapper
+import com.cabify.store.cart.tshirtCartItemData
+import com.cabify.store.cart.tshirtCartItemDto
 import com.cabify.store.core.utils.SchedulerProviderTestImpl
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertEquals
@@ -11,7 +14,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import java.lang.IllegalArgumentException
 
 @RunWith(MockitoJUnitRunner::class)
 class CartRepositoryImplTest {
@@ -23,21 +25,9 @@ class CartRepositoryImplTest {
 
     private lateinit var repo: CartRepositoryImpl
 
-    private lateinit var mugDto: CartItemDto
-    private lateinit var tshirtDto: CartItemDto
-
-    private lateinit var mugData: CartItemData
-    private lateinit var tshirtData: CartItemData
-
     @Before
     fun setup() {
         repo = CartRepositoryImpl(mapper, schedulerProvider)
-
-        mugDto = CartItemDto("MUG", 4)
-        mugData = CartItemData("MUG", count = 4)
-
-        tshirtDto = CartItemDto("TSHIRT", 3)
-        tshirtData = CartItemData("TSHIRT", count = 3)
     }
 
     // Note: Following tests are more integration than unit tests. Due to simple implementation of the repository
@@ -47,30 +37,30 @@ class CartRepositoryImplTest {
 
     @Test
     fun `test observe`() {
-        whenever(mapper.dtoToCartItemData(mugDto)).thenReturn(mugData)
-        whenever(mapper.dtoToCartItemData(tshirtDto)).thenReturn(tshirtData)
+        whenever(mapper.dtoToCartItemData(mugCartItemDto)).thenReturn(mugCartItemData)
+        whenever(mapper.dtoToCartItemData(tshirtCartItemDto)).thenReturn(tshirtCartItemData)
 
         val results = mutableListOf<List<CartItemData>>()
         repo.observeCartItems()
             .subscribe { results.add(it) }
 
-        repo.addToCart("MUG", 4).subscribe()
+        repo.addToCart("MUG", 2).subscribe()
         repo.addToCart("TSHIRT", 3).subscribe()
 
         assertEquals(results[0], listOf<CartItemData>())
-        assertEquals(results[1], listOf(mugData))
-        assertEquals(results[2], listOf(mugData, tshirtData))
+        assertEquals(results[1], listOf(mugCartItemData))
+        assertEquals(results[2], listOf(mugCartItemData, tshirtCartItemData))
     }
 
     @Test
     fun `get existing item`() {
-        whenever(mapper.dtoToCartItemData(mugDto)).thenReturn(mugData)
-        repo.addToCart("MUG", 4).subscribe()
+        whenever(mapper.dtoToCartItemData(mugCartItemDto)).thenReturn(mugCartItemData)
+        repo.addToCart("MUG", 2).subscribe()
 
         repo.getCartItem("MUG")
             .test()
             .assertNoErrors()
-            .assertValue { it == mugData }
+            .assertValue { it == mugCartItemData }
     }
 
     @Test
@@ -82,10 +72,10 @@ class CartRepositoryImplTest {
 
     @Test
     fun `update item`() {
-        whenever(mapper.dtoToCartItemData(mugDto)).thenReturn(mugData)
+        whenever(mapper.dtoToCartItemData(mugCartItemDto)).thenReturn(mugCartItemData)
         repo.addToCart("MUG", 1).subscribe()
 
-        repo.updateCartItem("MUG", 4)
+        repo.updateCartItem("MUG", 2)
             .test()
             .assertNoErrors()
             .assertComplete()
@@ -93,18 +83,18 @@ class CartRepositoryImplTest {
         repo.getCartItem("MUG")
             .test()
             .assertNoErrors()
-            .assertValue { it == mugData }
+            .assertValue { it == mugCartItemData }
     }
 
     @Test
     fun `delete item`() {
-        whenever(mapper.dtoToCartItemData(mugDto)).thenReturn(mugData)
-        repo.addToCart("MUG", 4).subscribe()
+        whenever(mapper.dtoToCartItemData(mugCartItemDto)).thenReturn(mugCartItemData)
+        repo.addToCart("MUG", 2).subscribe()
 
         repo.getCartItem("MUG")
             .test()
             .assertNoErrors()
-            .assertValue { it == mugData }
+            .assertValue { it == mugCartItemData }
 
         repo.deleteCartItem("MUG")
             .test()

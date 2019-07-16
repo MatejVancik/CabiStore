@@ -1,7 +1,11 @@
 package com.cabify.store.cart.domain
 
 import com.cabify.store.cart.domain.data.CartItemData
+import com.cabify.store.cart.mugCartItemData
+import com.cabify.store.cart.mugProductData
 import com.cabify.store.cart.repo.CartRepository
+import com.cabify.store.cart.tshirtCartItemData
+import com.cabify.store.cart.tshirtProductData
 import com.cabify.store.core.utils.SchedulerProviderTestImpl
 import com.cabify.store.product.domain.GetAllProductsUseCase
 import com.cabify.store.product.domain.data.ProductData
@@ -38,10 +42,10 @@ class ObserveCartUseCaseImplTest {
     fun setup() {
         observeCartUseCase = ObserveCartUseCaseImpl(cartRepository, getAllProductsUseCaseImpl, schedulerProvider)
 
-        cartItemsFirst = listOf(CartItemData("MUG"))
-        cartItemsSecond = listOf(CartItemData("MUG"), CartItemData("TSHIRT"))
+        cartItemsFirst = listOf(mugCartItemData)
+        cartItemsSecond = listOf(mugCartItemData, tshirtCartItemData)
 
-        products = listOf(ProductData("TSHIRT", "T-shirt", 5F), ProductData("MUG", "Mug", 5F))
+        products = listOf(tshirtProductData, mugProductData)
     }
 
     @Test
