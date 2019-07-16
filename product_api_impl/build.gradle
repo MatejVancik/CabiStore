@@ -3,25 +3,11 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
-    testImplementation 'junit:junit:4.12'
+    testImplementation apiImplTestDependencies.values()
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    kapt apiImplKapt.values()
 
-    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
-    api project(":product_api")
-    implementation project(":core")
+    implementation apiImplDependencies.values()
+    api product_api
 }
 
-repositories {
-    mavenCentral()
-}
