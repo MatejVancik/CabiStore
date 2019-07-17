@@ -92,3 +92,6 @@ UI tests are running using instrumentation. Thanks to architecture and dependenc
 * **Espresso** - standard for android UI testing. Makes it easy to write UI tests and it's the fastest way of executing them. Alternative would be for example appium, which on one hand allows reuse tests on iOS as well, but execution is way slower.
 * **MockWebServer** - helps scale UI tests easily. This spins up local server which app is making requests against. Alternative would be mocking specific repositories/api interfaces during tests which is more tidious and it also skips production code which is replaced by mocks.
 
+
+---
+\* a Mug
