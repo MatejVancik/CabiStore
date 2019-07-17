@@ -14,6 +14,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -64,16 +66,21 @@ class ObserveCartUseCaseImplTest {
 
     @Test
     fun `observe multiple events`() {
-        whenever(cartRepository.observeCartItems()).thenReturn(Observable.just(cartItemsFirst, cartItemsSecond))
+        val publishSubject = PublishSubject.create<List<CartItemData>>()
+        whenever(cartRepository.observeCartItems()).thenReturn(publishSubject)
         whenever(getAllProductsUseCaseImpl.get()).thenReturn(Single.just(products))
 
+        var values = 0
+
         observeCartUseCase.observe()
-            .test()
-            .assertNoErrors()
-            .assertValueCount(2)
+            .subscribe { values++ }
+
+        publishSubject.onNext(cartItemsFirst)
+        publishSubject.onNext(cartItemsSecond)
 
         verify(cartRepository, times(1)).observeCartItems()
-        verify(getAllProductsUseCaseImpl, times(2)).get()
+        verify(getAllProductsUseCaseImpl, times(1)).get()
+        Assert.assertEquals(2, values)
     }
 
 }
