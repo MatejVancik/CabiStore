@@ -1,5 +1,6 @@
 package com.cabify.store.product.di
 
+import com.cabify.store.core.di.UserSessionScope
 import com.cabify.store.core.utils.SchedulerProvider
 import com.cabify.store.product.domain.GetAllProductsUseCase
 import com.cabify.store.product.domain.GetAllProductsUseCaseImpl
@@ -18,13 +19,14 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
-class ProductApiModule {
+class ProductApiModule(
+    private val productApiBaseUrl: String
+) {
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideGetAllProductsUseCase(
         productRepository: ProductRepository,
         schedulerProvider: SchedulerProvider
@@ -33,7 +35,7 @@ class ProductApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideGetProductUseCase(
         getAllProductsUseCase: GetAllProductsUseCase,
         schedulerProvider: SchedulerProvider
@@ -42,13 +44,13 @@ class ProductApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideProductMapper(): ProductMapper {
         return ProductMapperImpl()
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideProductRepository(
         productRemoteApi: ProductRemoteApi,
         schedulerProvider: SchedulerProvider,
@@ -58,7 +60,7 @@ class ProductApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideProductRemoteApi(@Named("productApi") retrofit: Retrofit): ProductRemoteApi {
         return retrofit.create(ProductRemoteApi::class.java)
     }
@@ -70,10 +72,10 @@ class ProductApiModule {
      */
     @Named("productApi")
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideProductApiRetrofit(@Named("productApi") httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.myjson.com")
+            .baseUrl(productApiBaseUrl)
             .client(httpClient)
             .addConverterFactory(JacksonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -82,7 +84,7 @@ class ProductApiModule {
 
     @Named("productApi")
     @Provides
-    @Singleton
+    @UserSessionScope
     fun providesHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
             val loggingInterceptor = HttpLoggingInterceptor()

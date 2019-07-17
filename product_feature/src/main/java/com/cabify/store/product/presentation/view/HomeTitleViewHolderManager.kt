@@ -16,6 +16,7 @@ class HomeTitleViewHolderManager: ViewHolderManager<HomeTitleItemViewData, Basic
     }
 
     override fun bindViewHolder(holder: BasicViewHolder, model: HomeTitleItemViewData, position: Int) {
+        holder.itemView.contentDescription = model.title
         holder.text.text = model.title
     }
 

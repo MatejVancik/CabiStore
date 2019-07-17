@@ -70,7 +70,7 @@ class HomeFragment : BaseFragment(), ViewDataObserver<HomeViewData> {
 
     private fun onProductClicked(productId: String) {
         ProductDetailFragment.newInstance(productId)
-            .show(childFragmentManager, "ProductDetailFragment")
+            .show(activity!!.supportFragmentManager, ProductDetailFragment::class.java.name)
     }
 
 }

@@ -1,32 +1,38 @@
 package com.cabify.cabistore
 
 import android.app.Application
+import androidx.core.provider.FontRequest
 import com.cabify.cabistore.di.AppComponent
-import com.cabify.cabistore.di.AppComponentProvider
 import com.cabify.cabistore.di.DaggerAppComponent
+import com.cabify.cabistore.di.session.UserSessionComponent
+import com.cabify.store.product.di.ProductApiModule
+import com.cabify.store.product.repo.ProductRemoteRepoConstants
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import io.github.inflationx.calligraphy3.CalligraphyConfig
-import javax.inject.Inject
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 
+open class CabiStoreApp : Application(), HasAndroidInjector {
 
-class CabiStoreApp : Application(), AppComponentProvider, HasAndroidInjector {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    override val appComponent: AppComponent by lazy {
+    open val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory()
             .create(this)
     }
 
+    var userSessionComponent: UserSessionComponent? = null
+
     override fun onCreate() {
         super.onCreate()
-        appComponent.inject(this)
 
+        initCalligraphy()
+
+        // There should be more advance mechanism to start user session in right time (in real app it would be probably
+        // when we obtain session token).
+        startUserSession()
+    }
+
+    private fun initCalligraphy() {
         ViewPump.init(
             ViewPump.builder().addInterceptor(
                 CalligraphyInterceptor(
@@ -39,8 +45,21 @@ class CabiStoreApp : Application(), AppComponentProvider, HasAndroidInjector {
         )
     }
 
+    open fun startUserSession() {
+        userSessionComponent = appComponent.userSessionComponentFactory.create(
+            ProductApiModule(ProductRemoteRepoConstants.productBaseUrl)
+        )
+    }
+
+    fun finishUserSession() {
+        userSessionComponent = null
+    }
+
     override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector
+        return AndroidInjector {
+            appComponent.dispatchingAndroidInjector.maybeInject(it) ||
+                userSessionComponent?.dispatchingAndroidInjector?.maybeInject(it) ?: false
+        }
     }
 
 }

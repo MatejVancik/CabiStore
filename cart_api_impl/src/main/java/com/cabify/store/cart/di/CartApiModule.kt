@@ -5,18 +5,18 @@ import com.cabify.store.cart.repo.CartRepository
 import com.cabify.store.cart.repo.CartRepositoryImpl
 import com.cabify.store.cart.repo.data.mapper.CartMapper
 import com.cabify.store.cart.repo.data.mapper.CartMapperImpl
+import com.cabify.store.core.di.UserSessionScope
 import com.cabify.store.core.utils.SchedulerProvider
 import com.cabify.store.product.domain.GetAllProductsUseCase
 import com.cabify.store.product.domain.GetProductUseCase
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class CartApiModule {
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideAddItemToCartUseCase(
         cartRepository: CartRepository,
         schedulerProvider: SchedulerProvider
@@ -25,7 +25,7 @@ class CartApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideGetCartItemUseCaseImpl(
         cartRepository: CartRepository,
         getProductUseCase: GetProductUseCase,
@@ -35,7 +35,7 @@ class CartApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideDeleteCartItemUseCase(
         cartRepository: CartRepository,
         schedulerProvider: SchedulerProvider
@@ -44,7 +44,7 @@ class CartApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideObserveCartUseCase(
         cartRepository: CartRepository,
         getAllProductsUseCase: GetAllProductsUseCase,
@@ -54,7 +54,7 @@ class CartApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideUpdateCartUseCase(
         cartRepository: CartRepository,
         schedulerProvider: SchedulerProvider
@@ -63,13 +63,13 @@ class CartApiModule {
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideCartRepository(cartMapper: CartMapper, schedulerProvider: SchedulerProvider): CartRepository {
         return CartRepositoryImpl(cartMapper, schedulerProvider)
     }
 
     @Provides
-    @Singleton
+    @UserSessionScope
     fun provideCartMapper(): CartMapper {
         return CartMapperImpl()
     }

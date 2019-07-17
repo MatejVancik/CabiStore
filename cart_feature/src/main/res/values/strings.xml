@@ -8,7 +8,7 @@
     <string name="buy_now">Buy now</string>
     <string name="to_pay">To pay</string>
     <string name="error_loading_cart_item">Cannot load this item at the moment.</string>
-    <string name="cart_is_empty">🥺\nYour shopping cart is empty.\nGo and add something!</string>
+    <string name="cart_is_empty">😢\nYour shopping cart is empty.\nGo and add something!</string>
     <string name="error_loading_cart">
         🤕\nShopping cart is not available at the moment.\nTap here to try reload it.
     </string>

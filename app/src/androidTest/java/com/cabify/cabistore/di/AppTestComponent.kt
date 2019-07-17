@@ -1,13 +1,11 @@
 package com.cabify.cabistore.di
 
 import android.content.Context
-import com.cabify.cabistore.di.session.UserSessionComponent
 import com.cabify.store.core.android.di.CoreAndroidModule
 import com.cabify.store.core.di.CoreModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
-import dagger.android.DispatchingAndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -18,15 +16,13 @@ import javax.inject.Singleton
         CoreAndroidModule::class
     ]
 )
-interface AppComponent {
+interface AppTestComponent: AppComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance application: Context): AppComponent
+        fun create(@BindsInstance application: Context): AppTestComponent
     }
 
-    val dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    val userSessionComponentFactory: UserSessionComponent.Factory
+    val userSessionTestComponentFactory: UserSessionTestComponent.Factory
 
 }

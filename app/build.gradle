@@ -11,7 +11,7 @@ android {
         targetSdkVersion targetSdk
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.cabify.cabistore.CabiTestRunner"
     }
     buildTypes {
         release {
@@ -27,8 +27,18 @@ dependencies {
     implementation androidxCoreKtx
     implementation constraintLayout
     testImplementation junit
+
+    kaptAndroidTest daggerCompiler
+    kaptAndroidTest daggerAndroidCompiler
     androidTestImplementation testRunner
     androidTestImplementation espressoCore
+    androidTestImplementation androidxTestCore
+    androidTestImplementation androidxTestRunner
+    androidTestImplementation androidxTestRules
+    androidTestImplementation androidxTestJunit
+    androidTestImplementation mockServer
+    androidTestImplementation rx2Idler
+    androidTestImplementation espressoContrib
 
     implementation navigationFragment
     implementation navigationUi

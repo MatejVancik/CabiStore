@@ -22,6 +22,7 @@ class CartItemViewHolderManager(
     }
 
     override fun bindViewHolder(holder: BasicViewHolder, model: CartItemViewData, position: Int) {
+        holder.itemView.contentDescription = model.code
         holder.itemView.setOnClickListener { onItemClick(model) }
 
         holder.title.text = model.title

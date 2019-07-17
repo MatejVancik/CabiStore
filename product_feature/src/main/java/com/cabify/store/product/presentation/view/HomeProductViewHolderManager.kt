@@ -20,6 +20,7 @@ class HomeProductViewHolderManager(
     }
 
     override fun bindViewHolder(holder: BasicViewHolder, model: HomeProductItemViewData, position: Int) {
+        holder.itemView.contentDescription = model.title
         holder.itemView.setOnClickListener { onClickAction(model.productId) }
         holder.title.text = model.title
         holder.price.text = model.price

@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.cabify.cabistore.CabiStoreApp
 import com.cabify.cabistore.R
 import com.cabify.store.cart.presentation.di.CartComponent
 import com.cabify.store.cart.presentation.di.CartComponentProvider

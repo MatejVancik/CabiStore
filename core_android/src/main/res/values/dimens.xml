@@ -5,5 +5,6 @@
     <dimen name="default_spacing_small">8dp</dimen>
     <dimen name="default_spacing_mini">4dp</dimen>
     <dimen name="default_elevation">2dp</dimen>
+    <dimen name="elevation_above_default">3dp</dimen>
     <dimen name="default_corner_radius">4dp</dimen>
 </resources>
